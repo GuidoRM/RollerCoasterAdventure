@@ -1,63 +1,95 @@
 # menu.py
 import sys
-import random
 import pygame
 import pygame_menu
 from rollercoster.config import SCREEN_WIDTH, SCREEN_HEIGHT
-from rollercoster.transitions import fade_in, fade_out
-from rollercoster.drawing import draw_epic_menu_background
+from rollercoster.transitions import fade_in
 from rollercoster.game import RollerCoasterGame
+import levels  # Importamos el archivo levels.py
 
-def start_game_from_menu(values):
-    try:
-        func_str = values['func']
-    except KeyError:
-        func_str = "10 - x**2"
-    try:
-        xmin = float(values['xmin'])
-    except:
-        xmin = 0
-    try:
-        xmax = float(values['xmax'])
-    except:
-        xmax = 10
-    surface = pygame.display.get_surface()
-    fade_out(surface, speed=10)
-    game = RollerCoasterGame(func_str, xmin, xmax)
-    game.run()
-    fade_in(surface, speed=10)
-    main_menu()
+pygame.init()
 
-def main_menu():
+# Cargar imágenes
+fondo = pygame.image.load("imagen/background-menu.png")
+jugarButton = pygame.image.load("imagen/button-jugar.png")
+historialButton = pygame.image.load("imagen/button-historial.png")
+instrtuccionesButton = pygame.image.load("imagen/button-instrucciones.png")
+creditosButton = pygame.image.load("imagen/button-creditos.png")
+
+# Guardar imágenes originales para restaurarlas después
+jugarButton_original = jugarButton.copy()
+historialButton_original = historialButton.copy()
+instrtuccionesButton_original = instrtuccionesButton.copy()
+creditosButton_original = creditosButton.copy()
+
+# Coordenadas botón 
+global_x1, global_x2 = 376, 635
+
+def cambiar_opacidad(imagen):
+    imagen = imagen.copy()  # Crear una copia para no modificar la original
+    imagen.fill((150, 150, 150, 255), special_flags=pygame.BLEND_RGBA_MULT)
+    return imagen
+
+def menu():
+    global jugarButton, historialButton, instrtuccionesButton, creditosButton  # Declarar variables globales
+    
     pygame.init()
     surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    stars = [(random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT))
-             for _ in range(100)]
-    menu_theme = pygame_menu.themes.THEME_DARK.copy()
-    menu_theme.title_font = 'Impact'
-    menu_theme.title_font_size = 60
-    menu_theme.widget_font = 'Arial'
-    menu_theme.widget_font_size = 30
-    menu_theme.widget_margin = (25, 25)
-    menu_theme.background_color = (0, 0, 0)
-    
-    menu = pygame_menu.Menu('Roller Coaster Adventure', SCREEN_WIDTH, SCREEN_HEIGHT, theme=menu_theme)
-    menu.add.label("Forjando leyendas en las alturas", font_size=30, padding=(0, 0))
-    menu.add.text_input('Función f(x): ', default='10 - x**2', textinput_id='func')
-    menu.add.text_input('Valor mínimo de x: ', default='0', textinput_id='xmin')
-    menu.add.text_input('Valor máximo de x: ', default='10', textinput_id='xmax')
-    menu.add.button('Iniciar Juego', lambda: start_game_from_menu(menu.get_input_data()))
-    menu.add.button('Salir', pygame_menu.events.EXIT)
-
     fade_in(surface, speed=10)
     
     while True:
         events = pygame.event.get()
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+        # Restaurar imágenes originales antes de modificar
+        jugarButton = jugarButton_original
+        historialButton = historialButton_original
+        instrtuccionesButton = instrtuccionesButton_original
+        creditosButton = creditosButton_original
+
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        draw_epic_menu_background(surface, stars)
-        menu.update(events)
-        menu.draw(surface)
+
+            if (global_x1 <= mouse_x <= global_x2) and (440 <= mouse_y <= 538):
+                jugarButton = cambiar_opacidad(jugarButton_original) 
+            else:
+                jugarButton = jugarButton_original
+
+            if (global_x1 <= mouse_x <= global_x2) and (558 <= mouse_y <= 652):
+                historialButton = cambiar_opacidad(historialButton_original)
+            else:
+                historialButton = historialButton_original
+
+            if (global_x1 <= mouse_x <= global_x2) and (672 <= mouse_y <= 768):
+                instrtuccionesButton = cambiar_opacidad(instrtuccionesButton_original)
+            else:
+                instrtuccionesButton = instrtuccionesButton_original
+
+            if (global_x1 <= mouse_x <= global_x2) and (788 <= mouse_y <= 882):
+                creditosButton = cambiar_opacidad(creditosButton_original)
+            else:
+                creditosButton = creditosButton_original
+
+            # Detectar clic del mouse
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if (global_x1 <= mouse_x <= global_x2) and (440 <= mouse_y <= 538):
+                    levels.mostrar_nivel(surface) 
+
+                if (global_x1 <= mouse_x <= global_x2) and (558 <= mouse_y <= 652):
+                    print("Pressed")
+                
+                if (global_x1 <= mouse_x <= global_x2) and (672 <= mouse_y <= 768):
+                    print("Pressed")
+
+                if (global_x1 <= mouse_x <= global_x2) and (788 <= mouse_y <= 882):
+                    print("Pressed")
+
+        surface.blit(fondo, (0, 0))
+        surface.blit(jugarButton, (0, 0))
+        surface.blit(historialButton, (0, 0))
+        surface.blit(instrtuccionesButton, (0, 0))
+        surface.blit(creditosButton, (0, 0))
+
         pygame.display.flip()
