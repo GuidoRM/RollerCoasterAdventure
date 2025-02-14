@@ -10,11 +10,11 @@ def cambiar_opacidad(imagen):
     imagen.fill((150, 150, 150, 255), special_flags=pygame.BLEND_RGBA_MULT)
     return imagen
 
-def start_game_from_menu(values):
+def start_game_from_menu(values, level):
     try:
         func_str = values['func']
     except KeyError:
-        func_str = "10 - x**2"
+        func_str = "x-1"
     try:
         xmin = float(values['xmin'])
     except:
@@ -23,9 +23,10 @@ def start_game_from_menu(values):
         xmax = float(values['xmax'])
     except:
         xmax = 10
+
     surface = pygame.display.get_surface()
     fade_out(surface, speed=10)
-    game = RollerCoasterGame(func_str, xmin, xmax)
+    game = RollerCoasterGame(func_str, xmin, xmax, level)
     game.run()
     fade_in(surface, speed=10)
     mostrar_nivel()
@@ -94,15 +95,15 @@ def mostrar_nivel():
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if (190 <= mouse_x <= 485) and (193 <= mouse_y <= 393):
-                    start_game_from_menu({'func': 'x+1', 'xmin': 0, 'xmax' : 10})
+                    start_game_from_menu({'func': '-10 + 100/(x+5)', 'xmin': -3, 'xmax' : 10}, level=1)
                 if (497 <= mouse_x <= 792) and (193 <= mouse_y <= 393):
-                    start_game_from_menu({'func': 'x+1', 'xmin': 0, 'xmax' : 10})
+                    start_game_from_menu({'func': '-0.2*x**2 + 5', 'xmin': 0, 'xmax' : 10}, level=2)
                 if (190 <= mouse_x <= 485) and (405 <= mouse_y <= 605):
-                    start_game_from_menu({'func': '10 - x**2', 'xmin': 0, 'xmax' : 10})
+                    start_game_from_menu({'func': '10 - x**2', 'xmin': -10, 'xmax' : 10}, level=3)
                 if (497 <= mouse_x <= 792) and (405 <= mouse_y <= 605):
-                    start_game_from_menu({'func': 'x+1', 'xmin': 0, 'xmax' : 10})
+                    start_game_from_menu({'func': '-0.0002*x**5 + 0.01*x**3', 'xmin': -10, 'xmax' : 10}, level=4)
                 if (366 <= mouse_x <= 662) and (643 <= mouse_y <= 843):
-                    start_game_from_menu({'func': 'x+1', 'xmin': 0, 'xmax' : 10})
+                    start_game_from_menu({'func': '-0.01*x**3 + 0.2*x', 'xmin': -10, 'xmax' : 10}, level=5)
                 if (365 <= mouse_x <= 663) and (910 <= mouse_y <= 995):
                     print("Pressed")
     
@@ -118,3 +119,8 @@ def mostrar_nivel():
         screen.blit(makeLevel, (0, 0))
     
         pygame.display.flip()
+
+
+
+# MED
+# 
