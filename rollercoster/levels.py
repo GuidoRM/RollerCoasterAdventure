@@ -104,6 +104,8 @@ def mostrar_nivel():
                     start_game_from_menu({'func': '-0.0002*x**5 + 0.01*x**3', 'xmin': -10, 'xmax' : 10}, level=4)
                 if (366 <= mouse_x <= 662) and (643 <= mouse_y <= 843):
                     start_game_from_menu({'func': '-0.01*x**3 + 0.2*x', 'xmin': -10, 'xmax' : 10}, level=5)
+
+                # Boton crear nivel
                 if (365 <= mouse_x <= 663) and (910 <= mouse_y <= 995):
                     print("Pressed")
     

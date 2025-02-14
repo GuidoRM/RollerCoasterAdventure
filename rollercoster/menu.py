@@ -80,12 +80,15 @@ def menu():
                     mostrar_nivel()
                     return 
                 
+                # Boton historial
                 if (global_x1 <= mouse_x <= global_x2) and (558 <= mouse_y <= 652):
                     print("Pressed")
                 
+                # Boton instrucciones
                 if (global_x1 <= mouse_x <= global_x2) and (672 <= mouse_y <= 768):
                     print("Pressed")
 
+                # Boton creditos
                 if (global_x1 <= mouse_x <= global_x2) and (788 <= mouse_y <= 882):
                     print("Pressed")
 
