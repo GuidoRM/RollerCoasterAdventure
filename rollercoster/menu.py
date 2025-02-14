@@ -5,7 +5,8 @@ import pygame_menu
 from rollercoster.config import SCREEN_WIDTH, SCREEN_HEIGHT
 from rollercoster.transitions import fade_in
 from rollercoster.game import RollerCoasterGame
-import levels  # Importamos el archivo levels.py
+from rollercoster.levels import mostrar_nivel
+
 
 pygame.init()
 
@@ -75,8 +76,10 @@ def menu():
             # Detectar clic del mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if (global_x1 <= mouse_x <= global_x2) and (440 <= mouse_y <= 538):
-                    levels.mostrar_nivel(surface) 
-
+                    from rollercoster.levels import mostrar_nivel 
+                    mostrar_nivel()
+                    return 
+                
                 if (global_x1 <= mouse_x <= global_x2) and (558 <= mouse_y <= 652):
                     print("Pressed")
                 
