@@ -40,7 +40,6 @@ def mostrar_nivel():
     level3 = pygame.image.load("imagen/level-3.png")
     level4 = pygame.image.load("imagen/level-4.png")
     level5 = pygame.image.load("imagen/level-5.png")
-    makeLevel = pygame.image.load("imagen/makelevel.png")
 
 
     level1_origial = level1.copy()
@@ -48,7 +47,6 @@ def mostrar_nivel():
     level3_origial = level3.copy()
     level4_origial = level4.copy()
     level5_origial = level5.copy()
-    makeLevel_origial = makeLevel.copy()
 
     running = True
     while running:
@@ -59,7 +57,6 @@ def mostrar_nivel():
         level3 = level3_origial
         level4 = level4_origial
         level5 = level5_origial
-        makeLevel = makeLevel_origial
 
 
         if (190 <= mouse_x <= 485) and (193 <= mouse_y <= 393):
@@ -82,10 +79,6 @@ def mostrar_nivel():
             level5 = cambiar_opacidad(level5) 
         else:
             level5 = level5_origial
-        if (365 <= mouse_x <= 663) and (910 <= mouse_y <= 995):
-            makeLevel = cambiar_opacidad(makeLevel) 
-        else:
-            makeLevel = makeLevel_origial
 
 
         for event in pygame.event.get():
@@ -107,9 +100,7 @@ def mostrar_nivel():
 
                 # Boton crear nivel
                 if (365 <= mouse_x <= 663) and (910 <= mouse_y <= 995):
-                    print("Pressed")
-    
-               
+                    print("Pressed")         
 
 
         screen.blit(fondo, (0, 0))
@@ -118,7 +109,6 @@ def mostrar_nivel():
         screen.blit(level3, (0, 0))
         screen.blit(level4, (0, 0))
         screen.blit(level5, (0, 0))
-        screen.blit(makeLevel, (0, 0))
     
         pygame.display.flip()
 
